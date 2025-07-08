@@ -131,66 +131,71 @@ if __name__ == '__main__':
 
 ![3](https://github.com/Foxbeerxxx/my_own_collection/blob/main/img/img3.png)
 
-8. `Заполните здесь этапы выполнения, если требуется ....`
-9. `Заполните здесь этапы выполнения, если требуется ....`
-10. `Заполните здесь этапы выполнения, если требуется ....`
-11. `Заполните здесь этапы выполнения, если требуется ....`
-12. 
+```
+ansible-galaxy init my_own_namespace.yandex_cloud_elk.roles.my_role
+```
+8. `Создаю файл playbook.yml с наполнением`
 
 ```
-Поле для вставки кода...
-....
-....
-....
-....
-```
-
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота 2](ссылка на скриншот 2)`
-
+touch ~/ansible_new/ansible/playbook.yml
+наполнение
 
 ---
-
-### Задание 3
-
-`Приведите ответ в свободной форме........`
-
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
+- name: Create text file using custom role
+  hosts: localhost
+  roles:
+    - my_own_namespace.yandex_cloud_elk.my_role
 
 ```
-Поле для вставки кода...
-....
-....
-....
-....
+
+9. `Когда файл playbook.yml создан, перемещаю его в соответствующую директорию внутри роли:`
 ```
-
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
-
-### Задание 4
-
-`Приведите ответ в свободной форме........`
-
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
+mv ~/ansible_new/ansible/playbook.yml my_own_namespace/yandex_cloud_elk/roles/my_role/tasks/main.yml
 
 ```
-Поле для вставки кода...
-....
-....
-....
-....
-```
+10. `Перехожу в корневой каталог коллекции `
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
+```
+cd ~/ansible_new/ansible/my_own_namespace/yandex_cloud_elk/
+ создаю файл galaxy.yml
+
+touch galaxy.yml
+nano galaxy.yml
+ и добавляю наполнение 
+
+namespace: my_own_namespace
+name: yandex_cloud_elk
+version: 1.0.0
+readme: README.md
+author: AlexeyT
+authors:
+  - AlexeyT
+  - Cat Kokos
+description: Custom collection for managing Yandex Cloud ELK resources
+license: MIT
+
+```
+11. `Собираю коллекцию в архив`
+```
+(venv) alexey@dellalexey:~/ansible_new/ansible/my_own_namespace/yandex_cloud_elk$ ansible-galaxy collection build ~/ansible_new/ansible/my_own_namespace/yandex_cloud_elk
+[WARNING]: You are running the development version of Ansible. You should only run Ansible from "devel" if you are modifying the Ansible engine, or trying out features under development. This is a rapidly changing source of code and can become unstable at any point.
+[WARNING]: Found unknown keys in collection galaxy.yml at '/home/alexey/ansible_new/ansible/my_own_namespace/yandex_cloud_elk/galaxy.yml': author
+Created collection for my_own_namespace.yandex_cloud_elk at /home/alexey/ansible_new/ansible/my_own_namespace/yandex_cloud_elk/my_own_namespace-yandex_cloud_elk-1.0.0.tar.gz
+```
+12. `Создаю каталог mkdir ~/ansible_new/ansible/playbook_and_collection`
+13. `Перемещаю плейбук и архив `
+```
+mv ~/ansible_new/ansible/playbook.yml ~/ansible_new/ansible/yandex_cloud_elk-1.0.0.tar.gz /home/alexey/ansible_new/my_own_collection
+```
+14. `Устанавливаю коллекцию из локального архива`
+```
+ansible-galaxy collection install ./my_own_namespace-yandex_cloud_elk-1.0.0.tar.gz
+```
+![4](https://github.com/Foxbeerxxx/my_own_collection/blob/main/img/img4.png)
+
+
+15. `Запускаю playbook`
+```
+ansible-playbook playbook.yml
+```
+![5](https://github.com/Foxbeerxxx/my_own_collection/blob/main/img/img5.png)

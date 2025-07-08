@@ -1,0 +1,9 @@
+---
+- name: Create a text file using custom module
+  hosts: localhost
+  tasks:
+    - name: Create file with content
+      my_own_namespace.yandex_cloud_elk.my_own_module:
+        path: "/tmp/test_file.txt"
+        content: "Hello, Ansible!"
+
